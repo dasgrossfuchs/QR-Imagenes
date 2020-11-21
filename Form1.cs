@@ -106,5 +106,71 @@ namespace QR_Imagenes
             //    }
             //}
         }
+        //Botones Inicio
+        private void botonsalir_Click(object sender, EventArgs e)
+        {
+            System.Environment.Exit(0);  
+        }
+
+        //Botones Fin
+        //Analizadores Inicio
+        //Lexico
+        /*Explicacion Lexer
+         * Estructura base del codigo:
+         * 
+         * qrimg,nombre_autor<string>,ancho_imagen<int>,a-,arreglo_pixeles,-o
+         * 
+         * ----El nombre del autor sera parte de la informacion
+         * ----Dado que la imagen generada por el momento sera cuadrada solo se necesita el ancho.
+         * ----El inicio del arreglo es marcado por "a-" y el final por "-o"
+         * 
+         * Estructura del arreglo de pixeles:
+         * 
+         *      a-,'00','01','02',...,'0n','10',...,'1n',...,'n0',...,'nn',-o
+         *      
+         * ----cada pixel separado por una coma y contenido dentro de comillas sencillas
+         * ----cada pixel contiene 6 caracteres en el formato '#000000'
+         * ----la transparencia es simbolizada por 't'
+         */
+        public void Lexico(string code)
+        {
+            string[] arreglo = code.Split(',');
+            string error = "formato";
+            int tempsize;
+            try
+            {
+                if (arreglo[0] != "qrimg")
+                {
+                    error = "El codigo no esta validado para continuar.";
+                    throw new FormatException();
+                }
+                tempsize = Int32.Parse(arreglo[2]);
+                if (Array.IndexOf(arreglo,"a-") != 3 || Array.IndexOf(arreglo, "-o") != (4 + tempsize*tempsize))
+                {
+                    error = "Faltan limitantes de arreglo de pixeles.";
+                    throw new FormatException();
+                }
+                for (int i = 0; i < tempsize*tempsize; i++)
+                {
+                    if (arreglo[4+i].Length != 9 && arreglo[4+i] != "'t'" )
+                    {
+                        error = "El color del pixel en la posicion "+(4+i)+" no esta en el formato esperado\n" +
+                            "color = "+arreglo[4+i]+".\nSe esperaba '#000000' o 't'";
+                        throw new FormatException();
+                    }
+                }
+            }
+            catch (FormatException e)
+            {MessageBox.Show("El codigo no esta en el formato esperado \ndetalle:\n"+error, "Error");return;}
+            catch (Exception e)
+            {MessageBox.Show(e.Message, "Error");return;}
+        }
+        //Lexico
+        //Sintactico
+        //Sintactico
+        //Semantico
+        //Semantico
+        //Analizadores Fin
+
     }
 }

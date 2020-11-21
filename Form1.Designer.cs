@@ -38,6 +38,9 @@ namespace QR_Imagenes
             this.botonguardarimagen = new System.Windows.Forms.Button();
             this.dimension = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,6 +61,7 @@ namespace QR_Imagenes
             this.botonsalir.TabIndex = 1;
             this.botonsalir.Text = "Salir";
             this.botonsalir.UseVisualStyleBackColor = true;
+            this.botonsalir.Click += new System.EventHandler(this.botonsalir_Click);
             // 
             // botoncargar
             // 
@@ -79,6 +83,7 @@ namespace QR_Imagenes
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.SystemColors.Control;
             this.panel1.Location = new System.Drawing.Point(22, 22);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(300, 300);
@@ -104,6 +109,8 @@ namespace QR_Imagenes
             // 
             // dimension
             // 
+            this.dimension.BackColor = System.Drawing.SystemColors.Control;
+            this.dimension.ForeColor = System.Drawing.SystemColors.WindowText;
             this.dimension.FormattingEnabled = true;
             this.dimension.Items.AddRange(new object[] {
             "1 x 1",
@@ -137,11 +144,41 @@ namespace QR_Imagenes
             this.label1.TabIndex = 9;
             this.label1.Text = "Dimensiones";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(359, 216);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "label2";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(383, 241);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(35, 13);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "label3";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(383, 269);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 13);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "label4";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dimension);
             this.Controls.Add(this.botonguardarimagen);
@@ -151,8 +188,14 @@ namespace QR_Imagenes
             this.Controls.Add(this.botonsalir);
             this.Controls.Add(this.botonayuda);
             this.Controls.Add(this.panel1);
+            this.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
             this.Name = "Form1";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
+            this.TransparencyKey = System.Drawing.Color.Fuchsia;
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -171,6 +214,9 @@ namespace QR_Imagenes
         private System.Windows.Forms.Button botonguardarimagen;
         private System.Windows.Forms.ComboBox dimension;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
     }
 }
 
