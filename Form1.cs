@@ -7,18 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ColorPickerWPF;
+using QRCodeEncoderLibrary;
+using QRCodeDecoderLibrary;
 
 
 namespace QR_Imagenes
 {
     public partial class Form1 : Form
     {
-        int size;
-        string name;
+        int size = 0;
         string cadena;
-        string[,] pixel;
-        Color color;
-        PictureBox[,] pxl;
+        string[] pixel;
+        string selcol = "#FFFFFF";
+        PictureBox[] pxl;
         public Form1()
         {
             InitializeComponent();
@@ -26,39 +28,45 @@ namespace QR_Imagenes
         private void Form1_Load(object sender, EventArgs e)
         {
             dimension.SelectedIndex = 15;
-            cuadricular();
-            color = ColorTranslator.FromHtml("#000000");
-            //Color c = new Color();
-            //c = ColorTranslator.FromHtml("#00000000") ;
+            textBox1.Text = "anon";
+            //color = ColorTranslator.FromHtml("#FFFFFF");
+            //color = Color.Black;
+            ////Color c = new Color();
+            ////c = ColorTranslator.FromHtml("#00000000") ;
+            //label2.Text = "#" + color.R.ToString("X2") + color.G.ToString("X2") + color.B.ToString("X2");
+            //label3.Text = label2.Text.Replace("#","");
+            //label4.Text = int.Parse(label2.Text.Replace("#", ""),System.Globalization.NumberStyles.HexNumber).ToString();
+
         }
+        
+        //Dibujo
         public void cuadricular()
         {
             size = dimension.SelectedIndex + 1;
-            pixel = new string[size, size];
-            pxl = new PictureBox[size, size];
-            for (int i = 0; i < size; i++)
+            pixel = new string[size*size];
+            pxl = new PictureBox[size*size];
+            for (int i = 0; i < size*size; i++)
             {
-                for (int ii = 0; ii < size; ii++)
-                {
-                    pixel[i, ii] = "t";
-                }
+                pixel[i] = "t";
             }
             int w = panel1.Width / size;
-            int h = panel1.Height / size;
-
+            int cont=0;
             for (int i = 0; i < size; i++)
             {
                 for (int ii = 0; ii < size; ii++)
                 {
+
                     int x = panel1.Location.X + (w * ii);
-                    int y = panel1.Location.Y + (h * i);
-                    pxl[i,ii] = new PictureBox();
-                    pxl[i, ii].Size = new Size(w, h);
-                    pxl[i, ii].Location = new Point(x, y);
-                    pxl[i, ii].Name = "lbl" + (ii + i * 10);
-                    pxl[i, ii].BorderStyle = BorderStyle.FixedSingle;
-                    pxl[i, ii].SizeMode = PictureBoxSizeMode.StretchImage;
-                    this.Controls.Add(pxl[i,ii]);
+                    int y = panel1.Location.Y + (w * i);
+                    pxl[cont] = new PictureBox();
+                    pxl[cont].Size = new Size(w,w);
+                    pxl[cont].Location = new Point(x, y);
+                    pxl[cont].Name = "lbl" + (cont);
+                    pxl[cont].BorderStyle = BorderStyle.FixedSingle;
+                    pxl[cont].SizeMode = PictureBoxSizeMode.StretchImage;
+                    pxl[cont].MouseClick += clickcuadro;
+                    this.Controls.Add(pxl[cont]);
+                    cont++;
                 }
             }
             panel1.SendToBack();
@@ -79,98 +87,305 @@ namespace QR_Imagenes
             }
             else
             {
-                grafico.FillRectangle(new SolidBrush(color), 0, 0, 15, 15);
-                grafico.DrawRectangle(new Pen(color), 0, 0, 15, 15);
+                Color valuecolor = ColorTranslator.FromHtml(value); 
+                grafico.FillRectangle(new SolidBrush(valuecolor), 0, 0, 15, 15);
+                grafico.DrawRectangle(new Pen(valuecolor), 0, 0, 15, 15);
             }
             return imagen;
         }
-        public void actualizardibujo()
+        public Image Completa(string[] array)
         {
+            Bitmap imagen = new Bitmap(size*panel1.Width,size*panel1.Width);
+            Graphics grafico = Graphics.FromImage(imagen);
+            grafico.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            int temper = 0;
+            int sq = panel1.Width/size,x=0,y=0;
+            Color valuecolor = Color.White;
             for (int i = 0; i < size; i++)
             {
+                y = i * sq;
                 for (int ii = 0; ii < size; ii++)
                 {
-                    pxl[i, ii].Image = img(pixel[i,ii]);
-                    pxl[i, ii].Refresh();
+                    x = ii * sq;
+                    if (array[temper] != "t")
+                    {
+                        valuecolor = ColorTranslator.FromHtml(array[temper]);
+                    }
+                    else { valuecolor = ColorTranslator.FromHtml("#FFFFFF");}
+                    grafico.FillRectangle(new SolidBrush(valuecolor), x, y, sq, sq);
+                    grafico.DrawRectangle(new Pen(valuecolor), x, y, sq, sq);
+                    temper++;
                 }
             }
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    for (int ii = 0; ii < 10; ii++)
-            //    {
-            //        string name = "lbl" + (ii + i * 10);
-
-            //        Control ctn = this.Controls[name];
-
-            //        ctn.Text = procesos[(ii + i * 10)].ToString();
-            //    }
-            //}
+            return imagen;
         }
-        //Botones Inicio
-        private void botonsalir_Click(object sender, EventArgs e)
+        public Image Cargada(string code, Image qr)
         {
-            System.Environment.Exit(0);  
-        }
 
-        //Botones Fin
-        //Analizadores Inicio
-        //Lexico
-        /*Explicacion Lexer
-         * Estructura base del codigo:
-         * 
-         * qrimg,nombre_autor<string>,ancho_imagen<int>,a-,arreglo_pixeles,-o
-         * 
-         * ----El nombre del autor sera parte de la informacion
-         * ----Dado que la imagen generada por el momento sera cuadrada solo se necesita el ancho.
-         * ----El inicio del arreglo es marcado por "a-" y el final por "-o"
-         * 
-         * Estructura del arreglo de pixeles:
-         * 
-         *      a-,'00','01','02',...,'0n','10',...,'1n',...,'n0',...,'nn',-o
-         *      
-         * ----cada pixel separado por una coma y contenido dentro de comillas sencillas
-         * ----cada pixel contiene 6 caracteres en el formato '#000000'
-         * ----la transparencia es simbolizada por 't'
-         */
-        public void Lexico(string code)
-        {
-            string[] arreglo = code.Split(',');
-            string error = "formato";
-            int tempsize;
-            try
+            string[] codigo = code.Split(',');
+            int s = int.Parse(codigo[2]);
+            string[] array = new string[s * s];
+            for (int i = 0; i < s*s; i++)
             {
-                if (arreglo[0] != "qrimg")
+                array[i] = codigo[Array.IndexOf(codigo, "a-") + 1 + i];
+            }
+            Bitmap imagen = new Bitmap(600, 450);
+            Graphics grafico = Graphics.FromImage(imagen);
+            grafico.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            int temper = 0;
+            int sq = 300/size, x = 0, y = 0;
+            Color valuecolor = Color.White;
+            grafico.DrawLine(new Pen(Color.Black,5), 45, 45, sq * s + 45, 45);
+            grafico.DrawLine(new Pen(Color.Black, 5), 45, 45, 45,sq * s + 45);
+            grafico.DrawLine(new Pen(Color.Black, 5), sq * s + 45, 45,sq * s + 45, sq * s + 45);
+            grafico.DrawLine(new Pen(Color.Black, 5), 45, sq * s + 45, sq * s + 45, sq * s + 45);
+            for (int i = 0; i < s; i++)
+            {
+                y = i * sq + 50;
+                for (int ii = 0; ii < s; ii++)
                 {
-                    error = "El codigo no esta validado para continuar.";
-                    throw new FormatException();
+                    x = ii * sq + 50;
+                    valuecolor = ColorTranslator.FromHtml(array[temper]);
+                    grafico.FillRectangle(new SolidBrush(valuecolor), x, y, sq, sq);
+                    grafico.DrawRectangle(new Pen(valuecolor), x, y, sq, sq);
+                    temper++;
                 }
-                tempsize = Int32.Parse(arreglo[2]);
-                if (Array.IndexOf(arreglo,"a-") != 3 || Array.IndexOf(arreglo, "-o") != (4 + tempsize*tempsize))
+            }
+            grafico.DrawImage(qr, 400, 50, 150, 150);
+            grafico.DrawString("Dimension :", new Font("Arial", 16), new SolidBrush(Color.DarkGray), 370, 250);
+            grafico.DrawString(s+" x "+s, new Font("Arial", 16), new SolidBrush(Color.Black), 370, 270);
+            grafico.DrawString("Hecho por :", new Font("Arial", 16), new SolidBrush(Color.DarkGray), 370, 290);
+            grafico.DrawString(codigo[1], new Font("Arial", 16), new SolidBrush(Color.Black), 370, 310);
+            return imagen;
+        }
+        //Actualizaciones
+        public void actualizardibujo()
+        {
+            for (int i = 0; i < size*size; i++)
+            {
+                pxl[i].Image = img(pixel[i]);
+                pxl[i].Refresh();
+            }
+            actualizarcadena();
+        }
+        public void actualizarcadena()
+        {
+            if (string.IsNullOrEmpty(textBox1.Text))
+            {
+                textBox1.Text = "anon";
+            }
+            cadena = "qrimg," + textBox1.Text + "," + size + ",a-";
+            for (int i = 0; i < size*size; i++)
+            {
+                if (pixel[i] == "t")
                 {
-                    error = "Faltan limitantes de arreglo de pixeles.";
-                    throw new FormatException();
+                    cadena = cadena + ",#FFFFFF";
                 }
-                for (int i = 0; i < tempsize*tempsize; i++)
+                else
                 {
-                    if (arreglo[4+i].Length != 9 && arreglo[4+i] != "'t'" )
+                    cadena = cadena + "," +pixel[i];
+                }
+            }
+            cadena = cadena + ",-o";
+            actualizarqr();
+        }
+        public void actualizarqr() 
+        {
+            QRCodeEncoder qce = new QRCodeEncoder();
+            qce.ErrorCorrection = QRCodeEncoderLibrary.ErrorCorrection.L;
+            qce.ModuleSize = 4;
+            qce.QuietZone = 16;
+            qce.Encode(cadena);
+            pictureBox1.Image = qce.CreateQRCodeBitmap();
+        }
+        //Botones eventos
+        private void dimension_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (size == 0)
+            {cuadricular();return;}
+            if (dimension.SelectedIndex == size -1)
+            {return;}
+            DialogResult dr = MessageBox.Show("La accion reestablecera la imagen, por lo que sera borrada, deseas continuar?", "Redimensionar?", MessageBoxButtons.YesNo);
+            if (dr == DialogResult.Yes)
+            {
+                try
+                {
+                    for (int i = 0; i < size*size; i++)
                     {
-                        error = "El color del pixel en la posicion "+(4+i)+" no esta en el formato esperado\n" +
-                            "color = "+arreglo[4+i]+".\nSe esperaba '#000000' o 't'";
-                        throw new FormatException();
+                        pxl[i].Dispose();
                     }
                 }
+                catch (Exception)
+                {
+                }
+                cuadricular();
             }
-            catch (FormatException e)
-            {MessageBox.Show("El codigo no esta en el formato esperado \ndetalle:\n"+error, "Error");return;}
-            catch (Exception e)
-            {MessageBox.Show(e.Message, "Error");return;}
+            else { dimension.SelectedIndex = size - 1; }
         }
-        //Lexico
-        //Sintactico
-        //Sintactico
-        //Semantico
-        //Semantico
-        //Analizadores Fin
+        private void botonsalir_Click(object sender, EventArgs e)
+        {
+            DialogResult dr = MessageBox.Show("Los cambios no seran guardados, esta seguro que desea salir?","Salir?",MessageBoxButtons.YesNoCancel,MessageBoxIcon.Question);
+            if (dr == DialogResult.Yes)
+            {
+                System.Environment.Exit(0);
+            }
+        }
+        private void botonguardarimagen_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sf = new SaveFileDialog();
+            sf.Title = "Guardar imagen";
+            sf.Filter = "Bitmap|*.bmp|JPEG |*.jpeg|PNG |*.png";
+            sf.FilterIndex = 1;
+            sf.FileName = "ElDibujoDe"+textBox1.Text;
+            if (sf.FileName != "" && sf.ShowDialog() == DialogResult.OK)
+            {
+                System.IO.FileStream fs = (System.IO.FileStream)sf.OpenFile();
+                switch (sf.FilterIndex)
+                {
+                    case 1:
+                        this.Completa(pixel).Save(fs,
+                          System.Drawing.Imaging.ImageFormat.Bmp);
+                        break;
+                    case 2:
+                        this.Completa(pixel).Save(fs,
+                          System.Drawing.Imaging.ImageFormat.Jpeg);
+                        break;
+                    case 3:
+                        this.Completa(pixel).Save(fs,
+                          System.Drawing.Imaging.ImageFormat.Png);
+                        break;
+                }
+            }
+            
+        }
+        private void botoncargar_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog of = new OpenFileDialog();
+            QRDecoder qd = new QRDecoder();
+            of.Title = "Abre el codigo QR";
+            of.Filter = "PNG | *.png|JPEG | *.jpeg";
+            of.RestoreDirectory= true;
+            string codigo = "";
+            Image img;
+            if (of.ShowDialog() == DialogResult.OK)
+            {
+                img = new Bitmap(of.FileName);
+                byte[][] DataByteArray = qd.ImageDecoder(new Bitmap(of.FileName));
+                codigo = QRDecoder.ByteArrayToStr(DataByteArray[0]);
+                Analisis analisis = new Analisis(codigo);
+                if (analisis.Error != 0)
+                {
+                   Errorentrada(analisis.Error);
+                }
+                else
+                {
+                    Form2 form2 = new Form2(img,codigo);
+                    form2.ShowDialog();
+                    bool sdfsdf = form2.OKButtonClicked;
+                }
+            }
 
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            System.Windows.Media.Color diacol;
+            bool x = ColorPickerWindow.ShowDialog(out diacol,ColorPickerWPF.Code.ColorPickerDialogOptions.SimpleView);
+            selcol = diacol.ToString().Remove(1,2);
+            botoncolor.BackColor = ColorTranslator.FromHtml(selcol);
+            label3.Text = selcol;
+        }
+        private void clickcuadro(object sender, EventArgs e)
+        {
+            string n = ((PictureBox)sender).Name;
+            for (int i = 0; i < size * size; i++)
+            {
+                if (pxl[i].Name == n )
+                {
+                    pixel[i] = selcol;
+                    actualizardibujo();
+                    return;
+
+                }
+                //pixel[i, ii] = selcol;
+                //actualizardibujo();
+                //return;
+            }
+            
+        }
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetterOrDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+        private void botonguardar_Click(object sender, EventArgs e)
+        {
+            QRCodeEncoder qce = new QRCodeEncoder();
+            qce.ErrorCorrection = QRCodeEncoderLibrary.ErrorCorrection.L;
+            qce.ModuleSize = 4;
+            qce.QuietZone = 16;
+            qce.Encode(cadena);
+
+            SaveFileDialog sf = new SaveFileDialog();
+            sf.Title = "Guardar imagen";
+            sf.Filter = "PNG |*.png| JPEG |*.jpeg";
+            sf.FileName = "Codigo" + textBox1.Text;
+            Image qrcode = qce.CreateQRCodeBitmap();
+            if (sf.FileName != "" && sf.ShowDialog() == DialogResult.OK)
+            {
+                
+                System.IO.FileStream fs = (System.IO.FileStream)sf.OpenFile();
+                switch (sf.FilterIndex)
+                {
+                    case 1:
+                        qrcode.Save(fs,
+                          System.Drawing.Imaging.ImageFormat.Bmp);
+                        break;
+                    case 2:
+                        qrcode.Save(fs,
+                          System.Drawing.Imaging.ImageFormat.Jpeg);
+                        break;
+                    case 3:
+                        qrcode.Save(fs,
+                          System.Drawing.Imaging.ImageFormat.Png);
+                        break;
+                }
+            }
+
+        }
+        //errores
+        /*Glosario de errores de entrada
+         *  -1 Error sintactico
+         *      El codigo ingresado no tiene la estructura 
+         *      correcta, por lo que no puede ser procesado.
+         *  -2 Error Semantico
+         *      El codigo no tiene congruencia entre sus
+         *      componentes.
+         *  -3 Error lexico
+         *      El codigo contiene palabras no reconocidas, codigos de colores ilegales
+         *      o no esta en formato hexadecimal.
+         *      
+         */
+        public void Errorentrada(int error)
+        {
+            switch (error)
+            {
+                case 1:
+                    MessageBox.Show("El codigo no tiene la estructura correcta","Error de Sintaxis");
+                    break;
+                case 2:
+                    MessageBox.Show("El codigo no tiene congruencia entre componentes", "Error de Semantica");
+                    break;
+                case 3:
+                    MessageBox.Show("Los colores no estan en el formato correcto", "Error Lexico");
+                    break;
+                case 4:
+                    MessageBox.Show("", "Error");
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

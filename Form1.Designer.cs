@@ -29,6 +29,7 @@ namespace QR_Imagenes
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.botonayuda = new System.Windows.Forms.Button();
             this.botonsalir = new System.Windows.Forms.Button();
             this.botoncargar = new System.Windows.Forms.Button();
@@ -38,15 +39,17 @@ namespace QR_Imagenes
             this.botonguardarimagen = new System.Windows.Forms.Button();
             this.dimension = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.botoncolor = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // botonayuda
             // 
-            this.botonayuda.Location = new System.Drawing.Point(713, 12);
+            this.botonayuda.Location = new System.Drawing.Point(331, 6);
             this.botonayuda.Name = "botonayuda";
             this.botonayuda.Size = new System.Drawing.Size(75, 23);
             this.botonayuda.TabIndex = 0;
@@ -55,7 +58,7 @@ namespace QR_Imagenes
             // 
             // botonsalir
             // 
-            this.botonsalir.Location = new System.Drawing.Point(713, 415);
+            this.botonsalir.Location = new System.Drawing.Point(514, 328);
             this.botonsalir.Name = "botonsalir";
             this.botonsalir.Size = new System.Drawing.Size(75, 23);
             this.botonsalir.TabIndex = 1;
@@ -65,21 +68,23 @@ namespace QR_Imagenes
             // 
             // botoncargar
             // 
-            this.botoncargar.Location = new System.Drawing.Point(687, 386);
+            this.botoncargar.Location = new System.Drawing.Point(500, 299);
             this.botoncargar.Name = "botoncargar";
             this.botoncargar.Size = new System.Drawing.Size(101, 23);
             this.botoncargar.TabIndex = 2;
             this.botoncargar.Text = "Abrir codigo";
             this.botoncargar.UseVisualStyleBackColor = true;
+            this.botoncargar.Click += new System.EventHandler(this.botoncargar_Click);
             // 
             // botonguardar
             // 
-            this.botonguardar.Location = new System.Drawing.Point(645, 236);
+            this.botonguardar.Location = new System.Drawing.Point(488, 162);
             this.botonguardar.Name = "botonguardar";
             this.botonguardar.Size = new System.Drawing.Size(101, 23);
             this.botonguardar.TabIndex = 3;
             this.botonguardar.Text = "Guardar codigo";
             this.botonguardar.UseVisualStyleBackColor = true;
+            this.botonguardar.Click += new System.EventHandler(this.botonguardar_Click);
             // 
             // panel1
             // 
@@ -91,7 +96,8 @@ namespace QR_Imagenes
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(617, 80);
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(463, 6);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(150, 150);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -100,12 +106,13 @@ namespace QR_Imagenes
             // 
             // botonguardarimagen
             // 
-            this.botonguardarimagen.Location = new System.Drawing.Point(221, 327);
+            this.botonguardarimagen.Location = new System.Drawing.Point(25, 328);
             this.botonguardarimagen.Name = "botonguardarimagen";
             this.botonguardarimagen.Size = new System.Drawing.Size(101, 23);
             this.botonguardarimagen.TabIndex = 7;
             this.botonguardarimagen.Text = "Guardar imagen";
             this.botonguardarimagen.UseVisualStyleBackColor = true;
+            this.botonguardarimagen.Click += new System.EventHandler(this.botonguardarimagen_Click);
             // 
             // dimension
             // 
@@ -129,56 +136,84 @@ namespace QR_Imagenes
             "14 x 14",
             "15 x 15",
             "16 x 16"});
-            this.dimension.Location = new System.Drawing.Point(328, 37);
+            this.dimension.Location = new System.Drawing.Point(331, 48);
             this.dimension.Name = "dimension";
             this.dimension.Size = new System.Drawing.Size(67, 21);
             this.dimension.TabIndex = 8;
+            this.dimension.SelectedIndexChanged += new System.EventHandler(this.dimension_SelectedIndexChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label1.Location = new System.Drawing.Point(328, 21);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(328, 32);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(67, 13);
+            this.label1.Size = new System.Drawing.Size(78, 13);
             this.label1.TabIndex = 9;
             this.label1.Text = "Dimensiones";
+            // 
+            // botoncolor
+            // 
+            this.botoncolor.BackColor = System.Drawing.Color.White;
+            this.botoncolor.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.botoncolor.Location = new System.Drawing.Point(331, 104);
+            this.botoncolor.Name = "botoncolor";
+            this.botoncolor.Size = new System.Drawing.Size(112, 36);
+            this.botoncolor.TabIndex = 11;
+            this.botoncolor.UseVisualStyleBackColor = false;
+            this.botoncolor.Click += new System.EventHandler(this.button1_Click);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(359, 216);
+            this.label2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(328, 72);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "label2";
+            this.label2.Size = new System.Drawing.Size(115, 13);
+            this.label2.TabIndex = 12;
+            this.label2.Text = "Color seleccionado";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(383, 241);
+            this.label3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label3.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(356, 85);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "label3";
+            this.label3.Size = new System.Drawing.Size(64, 16);
+            this.label3.TabIndex = 13;
+            this.label3.Text = "#FFFFFF";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(383, 269);
+            this.label4.Location = new System.Drawing.Point(488, 211);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 13);
-            this.label4.TabIndex = 12;
-            this.label4.Text = "label4";
+            this.label4.Size = new System.Drawing.Size(44, 13);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Nombre";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(489, 227);
+            this.textBox1.MaxLength = 15;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 15;
+            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(616, 356);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
+            this.Controls.Add(this.botoncolor);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dimension);
             this.Controls.Add(this.botonguardarimagen);
@@ -214,9 +249,11 @@ namespace QR_Imagenes
         private System.Windows.Forms.Button botonguardarimagen;
         private System.Windows.Forms.ComboBox dimension;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button botoncolor;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

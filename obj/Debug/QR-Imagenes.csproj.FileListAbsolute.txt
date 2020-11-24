@@ -20,3 +20,4 @@ C:\Users\agust\Documents\GitKraken\QR-Imagenes\bin\Debug\ColorPickerWPF.dll
 C:\Users\agust\Documents\GitKraken\QR-Imagenes\bin\Debug\WriteableBitmapEx.Wpf.dll
 C:\Users\agust\Documents\GitKraken\QR-Imagenes\bin\Debug\WriteableBitmapEx.Wpf.pdb
 C:\Users\agust\Documents\GitKraken\QR-Imagenes\bin\Debug\WriteableBitmapEx.Wpf.xml
+C:\Users\agust\Documents\GitKraken\QR-Imagenes\obj\Debug\QR_Imagenes.Form2.resources
