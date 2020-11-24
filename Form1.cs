@@ -36,7 +36,7 @@ namespace QR_Imagenes
             //label2.Text = "#" + color.R.ToString("X2") + color.G.ToString("X2") + color.B.ToString("X2");
             //label3.Text = label2.Text.Replace("#","");
             //label4.Text = int.Parse(label2.Text.Replace("#", ""),System.Globalization.NumberStyles.HexNumber).ToString();
-
+            
         }
         
         //Dibujo
@@ -280,8 +280,23 @@ namespace QR_Imagenes
                 else
                 {
                     Form2 form2 = new Form2(img,codigo);
+                    form2.StartPosition = this.StartPosition;
                     form2.ShowDialog();
-                    bool sdfsdf = form2.OKButtonClicked;
+                    if (form2.OKButtonClicked)
+                    {
+                        dimension.SelectedIndex = int.Parse(codigo.Split(',').ElementAt(2)) - 1;
+                        if (size == int.Parse(codigo.Split(',').ElementAt(2)))
+                        {
+                            textBox1.Text = codigo.Split(',').ElementAt(1);
+                            for (int i = 0; i < size*size; i++)
+                            {
+                                pixel[i] = codigo.Split(',').ElementAt(4+i);
+                            }
+                            actualizardibujo();
+                        }
+                    }
+                    
+                    
                 }
             }
 
@@ -321,6 +336,7 @@ namespace QR_Imagenes
         }
         private void botonguardar_Click(object sender, EventArgs e)
         {
+            actualizarcadena();
             QRCodeEncoder qce = new QRCodeEncoder();
             qce.ErrorCorrection = QRCodeEncoderLibrary.ErrorCorrection.L;
             qce.ModuleSize = 4;

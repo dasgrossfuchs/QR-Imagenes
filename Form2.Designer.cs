@@ -38,15 +38,17 @@ namespace QR_Imagenes
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
+            this.pictureBox1.Image = global::QR_Imagenes.Properties.Resources.Mcbck;
+            this.pictureBox1.Location = new System.Drawing.Point(5, 5);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(600, 450);
+            this.pictureBox1.Size = new System.Drawing.Size(480, 320);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
             // buttoncargar
             // 
-            this.buttoncargar.Location = new System.Drawing.Point(287, 480);
+            this.buttoncargar.Location = new System.Drawing.Point(230, 327);
             this.buttoncargar.Name = "buttoncargar";
             this.buttoncargar.Size = new System.Drawing.Size(75, 23);
             this.buttoncargar.TabIndex = 1;
@@ -56,7 +58,7 @@ namespace QR_Imagenes
             // 
             // buttoncancelar
             // 
-            this.buttoncancelar.Location = new System.Drawing.Point(537, 480);
+            this.buttoncancelar.Location = new System.Drawing.Point(410, 326);
             this.buttoncancelar.Name = "buttoncancelar";
             this.buttoncancelar.Size = new System.Drawing.Size(75, 23);
             this.buttoncancelar.TabIndex = 2;
@@ -66,7 +68,7 @@ namespace QR_Imagenes
             // 
             // buttonguardar
             // 
-            this.buttonguardar.Location = new System.Drawing.Point(12, 480);
+            this.buttonguardar.Location = new System.Drawing.Point(5, 327);
             this.buttonguardar.Name = "buttonguardar";
             this.buttonguardar.Size = new System.Drawing.Size(151, 23);
             this.buttonguardar.TabIndex = 3;
@@ -78,12 +80,15 @@ namespace QR_Imagenes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(619, 515);
+            this.ClientSize = new System.Drawing.Size(489, 351);
             this.Controls.Add(this.buttonguardar);
             this.Controls.Add(this.buttoncancelar);
             this.Controls.Add(this.buttoncargar);
             this.Controls.Add(this.pictureBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MaximizeBox = false;
             this.Name = "Form2";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Form2";
             this.Load += new System.EventHandler(this.Form2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

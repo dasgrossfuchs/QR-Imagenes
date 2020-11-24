@@ -49,7 +49,7 @@ namespace QR_Imagenes
             // 
             // botonayuda
             // 
-            this.botonayuda.Location = new System.Drawing.Point(331, 6);
+            this.botonayuda.Location = new System.Drawing.Point(368, 282);
             this.botonayuda.Name = "botonayuda";
             this.botonayuda.Size = new System.Drawing.Size(75, 23);
             this.botonayuda.TabIndex = 0;
@@ -58,7 +58,7 @@ namespace QR_Imagenes
             // 
             // botonsalir
             // 
-            this.botonsalir.Location = new System.Drawing.Point(514, 328);
+            this.botonsalir.Location = new System.Drawing.Point(504, 299);
             this.botonsalir.Name = "botonsalir";
             this.botonsalir.Size = new System.Drawing.Size(75, 23);
             this.botonsalir.TabIndex = 1;
@@ -68,7 +68,7 @@ namespace QR_Imagenes
             // 
             // botoncargar
             // 
-            this.botoncargar.Location = new System.Drawing.Point(500, 299);
+            this.botoncargar.Location = new System.Drawing.Point(488, 220);
             this.botoncargar.Name = "botoncargar";
             this.botoncargar.Size = new System.Drawing.Size(101, 23);
             this.botoncargar.TabIndex = 2;
@@ -106,7 +106,7 @@ namespace QR_Imagenes
             // 
             // botonguardarimagen
             // 
-            this.botonguardarimagen.Location = new System.Drawing.Point(25, 328);
+            this.botonguardarimagen.Location = new System.Drawing.Point(488, 191);
             this.botonguardarimagen.Name = "botonguardarimagen";
             this.botonguardarimagen.Size = new System.Drawing.Size(101, 23);
             this.botonguardarimagen.TabIndex = 7;
@@ -136,9 +136,9 @@ namespace QR_Imagenes
             "14 x 14",
             "15 x 15",
             "16 x 16"});
-            this.dimension.Location = new System.Drawing.Point(331, 48);
+            this.dimension.Location = new System.Drawing.Point(331, 75);
             this.dimension.Name = "dimension";
-            this.dimension.Size = new System.Drawing.Size(67, 21);
+            this.dimension.Size = new System.Drawing.Size(112, 21);
             this.dimension.TabIndex = 8;
             this.dimension.SelectedIndexChanged += new System.EventHandler(this.dimension_SelectedIndexChanged);
             // 
@@ -147,7 +147,7 @@ namespace QR_Imagenes
             this.label1.AutoSize = true;
             this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(328, 32);
+            this.label1.Location = new System.Drawing.Point(328, 59);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(78, 13);
             this.label1.TabIndex = 9;
@@ -157,7 +157,7 @@ namespace QR_Imagenes
             // 
             this.botoncolor.BackColor = System.Drawing.Color.White;
             this.botoncolor.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.botoncolor.Location = new System.Drawing.Point(331, 104);
+            this.botoncolor.Location = new System.Drawing.Point(331, 149);
             this.botoncolor.Name = "botoncolor";
             this.botoncolor.Size = new System.Drawing.Size(112, 36);
             this.botoncolor.TabIndex = 11;
@@ -169,7 +169,7 @@ namespace QR_Imagenes
             this.label2.AutoSize = true;
             this.label2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(328, 72);
+            this.label2.Location = new System.Drawing.Point(328, 117);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(115, 13);
             this.label2.TabIndex = 12;
@@ -180,7 +180,7 @@ namespace QR_Imagenes
             this.label3.AutoSize = true;
             this.label3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.label3.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(356, 85);
+            this.label3.Location = new System.Drawing.Point(356, 130);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(64, 16);
             this.label3.TabIndex = 13;
@@ -189,18 +189,19 @@ namespace QR_Imagenes
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(488, 211);
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
+            this.label4.Location = new System.Drawing.Point(330, 217);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(44, 13);
+            this.label4.Size = new System.Drawing.Size(50, 13);
             this.label4.TabIndex = 14;
             this.label4.Text = "Nombre";
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(489, 227);
+            this.textBox1.Location = new System.Drawing.Point(331, 233);
             this.textBox1.MaxLength = 15;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.Size = new System.Drawing.Size(112, 20);
             this.textBox1.TabIndex = 15;
             this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
@@ -208,7 +209,7 @@ namespace QR_Imagenes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(616, 356);
+            this.ClientSize = new System.Drawing.Size(616, 329);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
