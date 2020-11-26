@@ -20,7 +20,6 @@ namespace QR_Imagenes
         {
             InitializeComponent();
             pictureBox1.Image = Cargada(codigo,qr);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
         }
         bool cargar = false;
         public bool OKButtonClicked
@@ -101,6 +100,8 @@ namespace QR_Imagenes
                           System.Drawing.Imaging.ImageFormat.Png);
                         break;
                 }
+                fs.Close();
+                sf.Dispose();
             }
         }
 
