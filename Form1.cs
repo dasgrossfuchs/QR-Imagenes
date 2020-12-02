@@ -107,16 +107,19 @@ namespace QR_Imagenes
             panel1.SendToBack();
             actualizardibujo();
         }
+
+        
+
         /*  Funcion img (Llamado por el proceso actualizardibujo)
-         *  Esta funcion crea la imagen que compone a cada cuadro
-         *  1 - Se crean los objetos
-         *      1.imagen - objeto bitmap, que contiene la imagen en si
-         *      1.grafico - objeto grafico, que realiza operaciones de dibujo
-         *  2 - Dependiendo del valor dado por el arreglo pixel[]
-         *      2.1 - "t" el valor default crea una cuadricula que representa un valor nulo
-         *      2.2 - "#xxxxxx" el valor de color en formato hexadecimal crea un cuadro del color
-         *  3 - Finalmente se regresa el objeto bitmap imagen
-         */
+*  Esta funcion crea la imagen que compone a cada cuadro
+*  1 - Se crean los objetos
+*      1.imagen - objeto bitmap, que contiene la imagen en si
+*      1.grafico - objeto grafico, que realiza operaciones de dibujo
+*  2 - Dependiendo del valor dado por el arreglo pixel[]
+*      2.1 - "t" el valor default crea una cuadricula que representa un valor nulo
+*      2.2 - "#xxxxxx" el valor de color en formato hexadecimal crea un cuadro del color
+*  3 - Finalmente se regresa el objeto bitmap imagen
+*/
         public Image img(string value)
         {
             Bitmap imagen = new Bitmap(16,16);
@@ -350,44 +353,52 @@ namespace QR_Imagenes
          */
         private void botoncargar_Click(object sender, EventArgs e)
         {
-            QRDecoder qd = new QRDecoder();
-            Image img;
-            OpenFileDialog of = new OpenFileDialog();
-            of.Title = "Abre el codigo QR";
-            of.Filter = "PNG | *.png|JPEG | *.jpeg";
-            string codigo = "";
-            if (of.ShowDialog() == DialogResult.OK)
+            try
             {
-                img = new Bitmap(of.FileName);
-                byte[][] DataByteArray = qd.ImageDecoder(new Bitmap(of.FileName));
-                codigo = QRDecoder.ByteArrayToStr(DataByteArray[0]);
-                of.Dispose();
-                Analisis analisis = new Analisis(codigo);
-                if (analisis.Error != 0)
+                QRDecoder qd = new QRDecoder();
+                Image img;
+                OpenFileDialog of = new OpenFileDialog();
+                of.Title = "Abre el codigo QR";
+                of.Filter = "PNG | *.png|JPEG | *.jpeg";
+                string codigo = "";
+                if (of.ShowDialog() == DialogResult.OK)
                 {
-                   Errorentrada(analisis.Error);
-                   return;
-                }
-                else
-                {
-                    Form2 form2 = new Form2(img,codigo);
-                    form2.StartPosition = this.StartPosition;
-                    form2.ShowDialog();
-                    if (form2.OKButtonClicked)
+                    img = new Bitmap(of.FileName);
+                    byte[][] DataByteArray = qd.ImageDecoder(new Bitmap(of.FileName));
+                    codigo = QRDecoder.ByteArrayToStr(DataByteArray[0]);
+                    of.Dispose();
+                    Analisis analisis = new Analisis(codigo);
+                    if (analisis.Error != 0)
                     {
-                        dimension.SelectedIndex = int.Parse(codigo.Split(',').ElementAt(2)) - 1;
-                        if (size == int.Parse(codigo.Split(',').ElementAt(2)))
-                        {
-                            textBox1.Text = codigo.Split(',').ElementAt(1);
-                            for (int i = 0; i < size*size; i++)
-                            {
-                                pixel[i] = codigo.Split(',').ElementAt(4+i);
-                            }
-                            actualizardibujo();
-                        }
+                       Errorentrada(analisis.Error);
+                       return;
                     }
-                    form2.Dispose();
+                    else
+                    {
+                        Form2 form2 = new Form2(img,codigo);
+                        form2.StartPosition = FormStartPosition.CenterParent;
+                        form2.ShowDialog();
+                        if (form2.OKButtonClicked)
+                        {
+                            dimension.SelectedIndex = int.Parse(codigo.Split(',').ElementAt(2)) - 1;
+                            if (size == int.Parse(codigo.Split(',').ElementAt(2)))
+                            {
+                                textBox1.Text = codigo.Split(',').ElementAt(1);
+                                for (int i = 0; i < size*size; i++)
+                                {
+                                    pixel[i] = codigo.Split(',').ElementAt(4+i);
+                                }
+                                actualizardibujo();
+                            }
+                        }
+                        form2.Dispose();
+                    }
                 }
+            }
+            catch (Exception)
+            {
+                Errorentrada(5);
+                
             }
         }
         /*  Evento button1_Click
@@ -400,6 +411,11 @@ namespace QR_Imagenes
          */
         private void button1_Click(object sender, EventArgs e)
         {
+            if (seleccionando == true)
+            {
+                Cursor = Cursors.Default;
+                seleccionando = false;
+            }
             System.Windows.Media.Color diacol;
             bool x = ColorPickerWindow.ShowDialog(out diacol,ColorPickerWPF.Code.ColorPickerDialogOptions.SimpleView);
             selcol = diacol.ToString().Remove(1,2);
@@ -429,8 +445,8 @@ namespace QR_Imagenes
         private void botonayuda_Click(object sender, EventArgs e)
         {
             Form3 f3 = new Form3();
-            f3.StartPosition = this.StartPosition;
             f3.FormBorderStyle = FormBorderStyle.None;
+            f3.StartPosition = FormStartPosition.CenterParent;
             f3.ShowDialog();
             f3.Dispose();
         }
@@ -505,14 +521,12 @@ namespace QR_Imagenes
                         label3.Text = selcol;
                         Cursor = Cursors.Default;
                         seleccionando = false;
-                        return;
                     }
                     else
                     {
                         pixel[i] = selcol;
                         toolTip.SetToolTip(pxl[i], pxl[i].Name+" "+pixel[i]);
                         actualizardibujo();
-                        return;
                     }
                 }
             }
@@ -569,9 +583,17 @@ namespace QR_Imagenes
                 case 4:
                     MessageBox.Show("", "Error");
                     break;
+                case 5:
+                    MessageBox.Show("No se detecto un codigo QR valido", "Error");
+                    break;
                 default:
                     break;
             }
+        }
+
+        public void Errorentrada(string mensaje)
+        {
+            MessageBox.Show(mensaje,"Error no controlado");
         }
 
     }

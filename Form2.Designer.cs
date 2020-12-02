@@ -39,18 +39,20 @@ namespace QR_Imagenes
             // pictureBox1
             // 
             this.pictureBox1.Image = global::QR_Imagenes.Properties.Resources.Mcbck;
-            this.pictureBox1.Location = new System.Drawing.Point(5, 5);
+            this.pictureBox1.Location = new System.Drawing.Point(7, 6);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(480, 320);
+            this.pictureBox1.Size = new System.Drawing.Size(640, 394);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
             // buttoncargar
             // 
-            this.buttoncargar.Location = new System.Drawing.Point(230, 327);
+            this.buttoncargar.Location = new System.Drawing.Point(307, 402);
+            this.buttoncargar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttoncargar.Name = "buttoncargar";
-            this.buttoncargar.Size = new System.Drawing.Size(75, 23);
+            this.buttoncargar.Size = new System.Drawing.Size(100, 28);
             this.buttoncargar.TabIndex = 1;
             this.buttoncargar.Text = "Cargar";
             this.buttoncargar.UseVisualStyleBackColor = true;
@@ -58,9 +60,10 @@ namespace QR_Imagenes
             // 
             // buttoncancelar
             // 
-            this.buttoncancelar.Location = new System.Drawing.Point(410, 326);
+            this.buttoncancelar.Location = new System.Drawing.Point(547, 401);
+            this.buttoncancelar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttoncancelar.Name = "buttoncancelar";
-            this.buttoncancelar.Size = new System.Drawing.Size(75, 23);
+            this.buttoncancelar.Size = new System.Drawing.Size(100, 28);
             this.buttoncancelar.TabIndex = 2;
             this.buttoncancelar.Text = "Cancelar";
             this.buttoncancelar.UseVisualStyleBackColor = true;
@@ -68,9 +71,10 @@ namespace QR_Imagenes
             // 
             // buttonguardar
             // 
-            this.buttonguardar.Location = new System.Drawing.Point(5, 327);
+            this.buttonguardar.Location = new System.Drawing.Point(7, 402);
+            this.buttonguardar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonguardar.Name = "buttonguardar";
-            this.buttonguardar.Size = new System.Drawing.Size(151, 23);
+            this.buttonguardar.Size = new System.Drawing.Size(201, 28);
             this.buttonguardar.TabIndex = 3;
             this.buttonguardar.Text = "Guardar Imagen";
             this.buttonguardar.UseVisualStyleBackColor = true;
@@ -78,17 +82,19 @@ namespace QR_Imagenes
             // 
             // Form2
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(489, 351);
+            this.ClientSize = new System.Drawing.Size(652, 432);
             this.Controls.Add(this.buttonguardar);
             this.Controls.Add(this.buttoncancelar);
             this.Controls.Add(this.buttoncargar);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.Name = "Form2";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Form2";
             this.Load += new System.EventHandler(this.Form2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
