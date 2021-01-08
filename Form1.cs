@@ -107,9 +107,6 @@ namespace QR_Imagenes
             panel1.SendToBack();
             actualizardibujo();
         }
-
-        
-
         /*  Funcion img (Llamado por el proceso actualizardibujo)
 *  Esta funcion crea la imagen que compone a cada cuadro
 *  1 - Se crean los objetos
